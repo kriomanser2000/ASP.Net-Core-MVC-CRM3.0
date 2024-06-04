@@ -1,0 +1,64 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+﻿<div class="span4 sidebar-nav span4 box-container portlet">
+	<h3>Mentor Menu</h3>
+	<div class="box-body-tall">
+		<ul class="nav nav-list">
+			<li class="nav-header">Mentor Quicklinks</li>
+			<li>
+				<a href="@Url.Action("Index", "Mentee")">
+					<i class="icon-th-list"></i>&nbsp;View Assigned Mentees
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Log", "Mentor")">
+					<i class="icon-edit"></i>&nbsp;Create Contact Log
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Request", "Mentee")">
+					<i class="icon-user"></i>&nbsp;Request Contact w/ Mentee
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Create", "Messaging")">
+					<i class="icon-envelope"></i>&nbsp;Send a Message
+				</a>
+			</li>
+
+			<li class="nav-header">Profile Management</li>
+			<li>
+				<a href="@Url.Action("Edit", "Mentor", new { id = ViewBag.UserId })">
+					<i class="icon-pencil"></i>&nbsp;Edit Your Mentor Profile
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Manage", "Account")">
+					<i class="icon-lock"></i>&nbsp;Edit Your Security Credentials
+				</a>
+			</li>
+
+			<li class="nav-header">Calendar Management</li>
+			<li>
+				<a href="@Url.Action("Specific", "Calendar", new { id = 28 })">
+					<i class="icon-calendar"></i>&nbsp;View Personal Events
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Specific", "Calendar", new { id = 26 })">
+					<i class="icon-calendar"></i>&nbsp;View Training Events
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Specific", "Calendar", new { id = 25 })">
+					<i class="icon-calendar"></i>&nbsp;View Public Events
+				</a>
+			</li>
+		</ul>
+	</div>
+	<h4>&nbsp;</h4>
+</div>

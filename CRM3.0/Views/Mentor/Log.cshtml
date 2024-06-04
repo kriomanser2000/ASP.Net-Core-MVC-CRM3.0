@@ -1,0 +1,63 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+@{
+	ViewBag.Title = "Log Mentee Contact";
+	Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+
+﻿@model CRM3._0.ViewModels.ContactLogViewModel
+<h2>@ViewBag.Title</h2>
+<div class="btn-group">
+	<a  id="FeedbackButton" 
+        class="btn" 
+        href="@Html.Action("Feedback", "Mentor")" 
+        data-toggle="modal" 
+        data-target="#myModal"><i class="icon-plus"></i>&nbsp;Provide Feedback</a>
+</div>
+<br/>
+<div class="well">
+    @using (Html.BeginForm("Log", "Mentor", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+	    @Html.ValidationSummary(true)
+	    @Html.HiddenFor(m => m.ContactLogId)
+        @Html.HiddenFor(m => m.MentorName, true)
+        @Html.HiddenFor(m => m.MentorId, true)
+        <div class="box-blue">
+            @Html.FormLineDropDownListFor(m => m.MenteeId, (IEnumerable<SelectListItem>)ViewBag.Mentees, true)
+            @Html.FormLineTextBoxFor(m => m.ContactDate, true)
+            @Html.FormLineDropDownListFor(m => m.ContactTypeId, (IEnumerable<SelectListItem>)ViewBag.ContactTypes, true)
+        </div>
+        <div class="box-grey">
+		    <div class="control-group">
+			    @Html.LabelFor(m => m.Details, new { @class="control-label control-label-big" })
+			    <div class="controls">
+				    @Html.TextAreaFor(m => m.Details, new { @style = "width: 500px; height: 300px"})
+			    </div>
+		    </div>
+		</div>
+    }
+</div>
+<div class="well">
+	<div class="control-group">
+		<div class="controls">
+			<button type="submit" class="btn btn-primary" id="SaveLog">Save Log</button>
+			<a href="@Request.UrlReferrer" class="btn">Cancel</a>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="myModal"></div>
+<script type="text/javascript">
+	$(function () 
+	{
+		$('#ContactDate').datepicker();
+		$('#FeedbackButton').attr("href", "~/Mentor/Feedback/" + $('#ContactLogId').val());
+		$('#FeedbackButton').click(function () 
+		{
+			lv_target = $(this).attr('data-target');
+			lv_url = $(this).attr('href');
+			$(lv_target).load(lv_url);
+		});
+	});
+</script>

@@ -1,0 +1,79 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+﻿@model CRM3._0.ViewModels.MentorViewModel
+@using (Html.BeginForm((string)ViewBag.Method, "Mentor", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="well">
+		@Html.ValidationSummary(true)
+        @Html.HiddenFor(m => m.PersonId)
+        <div class="box-blue">
+            @Html.FormLineDropDownListFor(m => m.Person.PrefixId, (IEnumerable<SelectListItem>)@ViewBag.Prefixes, true)
+            @Html.FormLineTextBoxFor(m => m.Person.FirstName, true)
+            @Html.FormLineTextBoxFor(m => m.Person.MiddleInitial, true)
+            @Html.FormLineTextBoxFor(m => m.Person.LastName, true)
+            @Html.FormLineDropDownListFor(m => m.Person.SuffixId, (IEnumerable<SelectListItem>)@ViewBag.Suffixes, true)
+        </div>            
+        <div class="box-grey">
+            @Html.FormLineTextBoxFor(m => m.Person.DOB, true, new { data_mask = "99/99/9999" })
+ 	  	  	@Html.FormLineDropDownListFor(m => m.Person.GenderId, (IEnumerable<SelectListItem>)@ViewBag.Genders, true)
+	        @Html.FormLineDropDownListFor(m => m.Person.RaceId, (IEnumerable<SelectListItem>)@ViewBag.Races, true)
+        </div>          
+        <div class="box-blue">
+            @Html.FormLineTextBoxFor(m => m.HomeAddress.Street1, true)
+            @Html.FormLineTextBoxFor(m => m.HomeAddress.Street2, true)
+            @Html.FormLineDropDownListFor(m => m.HomeAddress.StateCode, (IEnumerable<SelectListItem>)ViewBag.States, true)
+            @Html.FormLineDropDownListFor(m => m.HomeAddress.CityId, (IEnumerable<SelectListItem>)ViewBag.BlankDropdown, true)
+            @Html.FormLineTextBoxFor(m => m.HomeAddress.PostalCode5, true, new { data_mask = "99999" })
+	    </div>  
+        <div class="box-blue">
+            @Html.FormLineTextBoxFor(m => m.Person.SSN, true, new { data_mask = "999-99-9999" })
+            @Html.FormLineDropDownListFor(m => m.Person.StateWhereDlWasIssued, (IEnumerable<SelectListItem>)ViewBag.States, true)
+        </div>            
+        <div class="box-grey">
+            @Html.FormLineDropDownListFor(m => m.Person.FelonyArrested, (IEnumerable<SelectListItem>)ViewBag.YesNoList, true)
+            @Html.FormLineDropDownListFor(m => m.Person.FelonyConvicted, (IEnumerable<SelectListItem>)ViewBag.YesNoList, true)
+		    <div id="FelonyDescriptionBlock" class="control-group">
+			    @Html.LabelFor(m => m.Person.FelonyDescription, new { @class = "control-label control-label-big" })
+			    <div class="controls">
+				    @Html.TextAreaFor(m => m.Person.FelonyDescription, new { style = "width: 400px; height: 200px;" })
+			    </div>
+		    </div>
+		</div>
+        <div class="box-blue">
+            @Html.FormLineDropDownListFor(m => m.Person.MisdemeanorArrested, (IEnumerable<SelectListItem>)ViewBag.YesNoList, true)
+            @Html.FormLineDropDownListFor(m => m.Person.MisdemeanorConvicted, (IEnumerable<SelectListItem>)ViewBag.YesNoList, true)
+		    <div id="MisdemeanorDescriptionBlock" class="control-group">
+			    @Html.LabelFor(m => m.Person.MisdemeanorDescription, new { @class = "control-label control-label-big" })
+			    <div class="controls">
+				    @Html.TextAreaFor(m => m.Person.MisdemeanorDescription, new { style = "width: 400px; height: 200px;" })
+			    </div>
+		    </div>
+        </div>   
+        <div class="box-grey">
+            @Html.FormLineDropDownListFor(m => m.MinistryId, (IEnumerable<SelectListItem>)ViewBag.Ministries, true)
+        </div>
+    </div>
+    <div class="well">
+        <div class="control-group">
+	        <div class="controls">
+		        <button type="submit" class="btn btn-primary">Save Changes</button>
+		        <a href="@Request.UrlReferrer" class="btn">Cancel</a>
+	        </div>
+        </div>
+    </div>
+}       
+<script type="text/javascript">
+    $(function () 
+    {
+        if ($('#InputMode').val() == "CREATE")
+            $('#Person_id').val("0");
+	    $('#HomeAddress_StateCode').chainSelect('#HomeAddress_CityId', '/Default/Cities',
+        {
+
+        });
+	});
+</script>

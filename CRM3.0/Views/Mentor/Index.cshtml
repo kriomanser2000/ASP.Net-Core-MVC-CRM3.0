@@ -1,0 +1,30 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+﻿@{
+	ViewBag.Title = "Mentor Dashboard";
+	Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+
+<div id="dashboard-body" class="container">
+	<div class="row">
+		<div class="dashboard-body">
+			<div class="span12">
+				<div class="row">
+					@Html.Partial("_Menu")
+					<div class="span8">
+						<div class="row">
+							@Html.Partial("Portlets/_MessagingBox")
+							@Html.Partial("Portlets/_CalendarBox")
+						</div>
+						<div class="row top-buffer">
+							@Html.Partial("Portlets/_MentorLogBox")
+							@Html.Partial("Portlets/_ResourcesBox")
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+@Html.Partial("Portlets/_PortletScripts")

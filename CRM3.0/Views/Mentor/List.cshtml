@@ -1,0 +1,92 @@
+﻿'@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+
+﻿@model CRM3._0.ViewModels.MentorViewModel
+<h2>Mentors</h2>
+<div class="btn-group">
+	<a class="btn" href="~/Mentor/Create"><i class="icon-plus"></i>&nbsp;Add Mentor</a>
+</div>
+<br/>
+<div class="well">
+	<table class="table table-bordered table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Last Name</th>
+				<th>First Name</th>
+				<th>Username</th>
+				<th>Ministry</th>
+				<th>Registration Date</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+	@foreach (var item in this.ViewBag.Mentors)
+	{		
+		<tr>
+			<td>@item.Person.LastName</td>
+			<td>@item.Person.FirstName</td>
+			<td>@item.UserProfile.Username</td>
+			<td>@item.Ministry.MinistryName</td>
+			<td>@String.Format("{0:dd/MM/yyyy}", @item.Person.RegistrationDate)</td>
+			<td>
+				<a class="btn" 
+					id="EditMentor" 
+					href="~/Mentor/Edit/@item.id" 
+					title="Edit Event"><i class="icon-edit"></i></a>
+				<button class="btn" 
+					id="DeleteMentor" 
+					data-mentorid="@item.id" 
+					title="Delete Mentor"><i class="icon-remove"></i></button>
+			</td>
+		</tr>
+	}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>Last Name</th>
+				<th>First Name</th>
+				<th>Username</th>
+				<th>MinistryId</th>
+				<th>Registration Date</th>
+				<th>Actions</th>
+			</tr>			
+		</tfoot>
+	</table>
+</div>
+<div class="well">
+    <div class="control-group">
+	    <div class="controls">
+		    <a href="@Request.UrlReferrer" class="btn btn-primary">Back</a>
+	    </div>
+    </div>
+</div>
+<script type="text/javascript">
+	$('#DeleteMentor').click(function () 
+	{
+		var r = confirm("Are you sure you want to delete the selected mentor?");
+		if (r == true) 
+		{
+			$.ajax({
+				type: "DELETE",
+				url: '@Url.Content("~/Mentor/Delete/")' + $(this).data("mentorid"),
+				success: function(data) 
+				{
+					if (data.Message == "success")
+					{
+						location.reload();
+					} 
+					else 
+					{
+						alert('Failed to delete mentor.');
+					}
+				}
+			});
+		}
+		return false;
+	});
+</script>

@@ -1,0 +1,93 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Mentee Contact Logs";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+
+﻿@model CRM3._0.ViewModels.ContactLogViewModel
+<h2>@ViewBag.Title</h2>
+<div class="btn-group">
+	<a class="btn" href="~/Mentor/Log"><i class="icon-plus"></i>&nbsp;Add Contact Log</a>
+</div>
+<br/>
+<div class="well">
+	<table class="table table-bordered table-striped table-hover">
+		<thead>
+			<tr>
+                <th>ID</th>
+                <th>Mentor</th>
+                <th>Mentee</th>
+                <th>Contact Date</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+	        @foreach (var item in this.ViewBag.Logs)
+	        {		
+		        <tr>
+			        <td>@item.id</td>
+			        <td>@item.MentorName</td>
+			        <td>@item.MenteeName</td>
+			        <td>@String.Format("{0:f}", @item.ContactDate)</td>
+			        <td>
+				        <a class="btn" 
+					        id="EditLog" 
+					        href="~/Mentor/Log/@item.id" 
+					        title="Edit Contact Log"><i class="icon-edit"></i></a>
+				        <a class="btn" 
+					        id="AddFeedback" 
+					        href="~/Mentor/Feedback/@item.id" 
+					        title="Add Feedback"><i class="icon-edit"></i></a>
+				        <button class="btn" 
+					        id="DeleteLog" 
+					        data-logid="@item.id" 
+					        title="Delete Log"><i class="icon-remove"></i></button>
+			        </td>
+		        </tr>
+	        }
+		</tbody>
+		<tfoot>
+			<tr>
+                <th>ID</th>
+                <th>Mentor</th>
+                <th>Mentee</th>
+                <th>Contact Date</th>
+				<th>Actions</th>
+			</tr>			
+		</tfoot>
+	</table>
+</div>
+<div class="well">
+    <div class="control-group">
+	    <div class="controls">
+		    <a href="@Request.UrlReferrer" class="btn btn-primary">Back</a>
+	    </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('#DeleteLog').click(function () 
+	{
+		var r = confirm("Are you sure you want to delete the selected contact log?");
+		if (r == true) 
+		{
+			$.ajax({
+				type: "POST",
+				url: '@Url.Content("~/Mentor/Log/Delete")' + $(this).data("logid"),
+				success: function(data) 
+				{
+					if (data.Message == "success") 
+					{
+						location.reload();
+					} 
+					else 
+					{
+						alert('Failed to delete contact log.');
+					}
+				}
+			});
+		}
+		return false;
+	});
+</script>
