@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+﻿@model CRM3._0.ViewModels.MinistryViewModel
+@using (Html.BeginForm((string)ViewBag.Method, "Ministry", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="well">
+		@Html.ValidationSummary(true)
+		@Html.HiddenFor(m => m.MinistryId)
+    	@Html.HiddenFor(m => m.LeadMentorId)
+        <div class="box-blue">
+            @Html.FormLineTextBoxFor(m => m.Name, true, new { @class = "input-xxlarge" })           
+			<div class="control-group">
+				@Html.LabelFor(m => m.Description, new { @class = "control-label control-label-big" })
+				<div class="controls">
+					@Html.TextAreaFor(m => m.Description, new { @class = "input-xxlarge" })
+				</div>
+			</div>
+        </div>
+        <div class="box-grey">
+            @Html.FormLineTextBoxFor(m => m.Address.Street1, true, new { @class = "input-xxlarge" })
+            @Html.FormLineTextBoxFor(m => m.Address.Street1, true, new { @class = "input-xxlarge" })
+            @Html.FormLineDropDownListFor(m => m.Address.StateCode, (IEnumerable<SelectListItem>)ViewBag.States, true)
+            @Html.FormLineDropDownListFor(m => m.Address.CityId, (IEnumerable<SelectListItem>)ViewBag.BlankDropdown, true)
+            @Html.FormLineTextBoxFor(m => m.Address.PostalCode5, true, new { data_mask = "99999" })
+        </div>   
+        <div class="box-blue">
+		    <div class="control-group">
+		        @Html.Label("Phone", new { @class = "control-label control-label-big" })
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.PhoneNumber.AreaCode, new { @class = "input-mini", placeholder = "Area Code", data_mask = "999" })&nbsp;
+                    @Html.TextBoxFor(m => m.PhoneNumber.PrefixCode, new { @class = "input-mini", placeholder = "Prefix", data_mask = "999" })&nbsp;
+                    @Html.TextBoxFor(m => m.PhoneNumber.SuffixCode, new { @class = "input-small", placeholder = "Suffix", data_mask = "9999" })
+                </div>
+		    </div>
+        </div>
+        <div class="box-grey"> 
+            @Html.FormLineDropDownListFor(m => m.LeadMentorId, (IEnumerable<SelectListItem>)ViewBag.Mentors, true)
+        </div>
+    </div>
+    <div class="well">
+        <div class="control-group">
+	        <div class="controls">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+		        <a href="@Request.UrlReferrer" class="btn">Cancel</a>
+	        </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(function () 
+    {
+        $('#Address_StateCode').chainSelect('#Address_CityId', '/Default/Cities',
+        {
+
+        });
+    });
+</script>

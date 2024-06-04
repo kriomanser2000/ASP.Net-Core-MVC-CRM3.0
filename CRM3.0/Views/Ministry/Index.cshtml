@@ -1,0 +1,87 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Ministries";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+
+﻿@model CRM3._0.ViewModels.MinistryViewModel
+<h2>@ViewBag.Title</h2>
+<div class="btn-group">
+	<a class="btn" href="~/Ministry/Create"><i class="icon-plus"></i>&nbsp;Add Ministry</a>
+</div>
+<br/>
+<div class="well">
+    <table class="table table-bordered table-striped table-hover">
+	    <thead>
+		    <tr>
+		        <td>ID</td>
+		        <td>Ministry Name</td>
+		        <td>Lead Mentor</td>
+			    <th>Actions</th>
+		    </tr>
+	    </thead>
+	    <tbody>
+        @foreach (var item in this.ViewBag.Ministries)
+        {		
+	        <tr>
+		        <td>@item.id</td>
+		        <td>Ministry Name</td>
+		        <td>Lead Mentor</td>
+		        <td>
+			        <a class="btn" 
+				        id="EditMinistry" 
+				        href="~/Ministry/Edit/@item.id" 
+				        title="Edit Ministry"><i class="icon-edit"></i></a>
+
+			        <button class="btn" 
+				        id="DeleteMinistry" 
+				        data-ministryid="@item.id" 
+				        title="Delete Ministry"><i class="icon-remove"></i></button>
+		        </td>
+	        </tr>
+        }
+	    </tbody>
+	    <tfoot>
+		    <tr>
+		        <td>ID</td>
+		        <td>Ministry Name</td>
+		        <td>Lead Mentor</td>
+			    <th>Actions</th>
+		    </tr>			
+	    </tfoot>
+    </table>
+</div>
+<div class="well">
+    <div class="control-group">
+	    <div class="controls">
+		    <a href="@Request.UrlReferrer" class="btn btn-primary">Cancel</a>
+	    </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('#DeleteMinistry').click(function () 
+	{
+		var r = confirm("Are you sure you want to delete the ministry?");
+		if (r == true) 
+		{
+			$.ajax({
+				type: "DELETE",
+				url: '@Url.Content("~/Ministry/Delete/")' + $(this).data("ministryid"),
+				success: function(data) 
+				{
+					if (data.Message == "success") 
+					{
+						location.reload();
+					} 
+					else 
+					{
+						alert('Failed to delete the ministry.');
+					}
+				}
+			});
+		}
+		return false;
+	});
+</script>
