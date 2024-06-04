@@ -1,0 +1,93 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@﻿
+@{
+    ViewBag.Title = "Inbox";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+
+@model CRM3._0.ViewModels.MessageViewModel
+<h2>@ViewBag.Title</h2>
+<div class="btn-toolbar">
+    <div class="btn-group">
+	    <a class="btn" href="~/Messaging/Create"><i class="icon-envelope"></i>&nbsp;Create Message</a>
+    </div>
+    <div class="btn-group">
+        <a class="btn" href="~/Messaging/Outbox"><i class="icon-plane"></i>&nbsp;Outbox</a>
+    </div>
+</div>
+<br />
+@if (this.ViewBag.Inbox != null)
+{
+	<table class="table table-bordered table-striped table-hover">
+		<thead>
+			<tr>
+                <th>ID</th>
+				<th>From</th>
+				<th>Subject</th>
+				<th>Date</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+	@foreach (var item in this.ViewBag.Inbox)
+	{		
+		<tr>
+            <td style="width: 50px;">@item.MessageId</td>
+			<td>@item.FromUser</td>
+			<td>@item.Subject</td>
+			<td>@String.Format("{0:f}", @item.Created)</td>
+			<td>
+                <a class="btn" 
+					id="ViewMessage" 
+					href="~/Messaging/View/@item.MessageId" 
+					title="View Message"><i class="icon-eye-open"></i></a>
+
+				<button class="btn" 
+					id="DeleteMessage" 
+					data-messageid="@item.MessageId" 
+					title="Delete Message"><i class="icon-remove"></i></button>
+			</td>
+		</tr>
+	}
+		</tbody>
+		<tfoot>
+			<tr>
+                <th>ID</th>
+				<th>From</th>
+				<th>Date</th>
+				<th>Subject</th>
+				<th>Actions</th>
+			</tr>			
+		</tfoot>
+	</table>
+} 
+else
+{
+	<p>No messages found.</p>
+}
+<script type="text/javascript">
+    $('#DeleteMessage').click(function () 
+	{
+		var r = confirm("Are you sure you want to delete the selected message?");
+		if (r == true) 
+		{
+			$.ajax({
+				type: "POST",
+				url: '@Url.Content("~/Message/Delete/")' + $(this).data("messageid"),
+				success: function(data) 
+				{
+					if (data.Message == "success") 
+					{
+						location.reload();
+					} 
+					else 
+					{
+						alert('Failed to delete message.');
+					}
+				}
+			});
+		}
+		return false;
+	});
+</script>
