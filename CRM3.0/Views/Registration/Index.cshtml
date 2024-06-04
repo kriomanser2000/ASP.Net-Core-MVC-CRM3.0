@@ -1,0 +1,46 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Mentor Registration Home";
+    ViewBag.Method = "Create";
+}
+
+﻿@model CRM3._0.ViewModels.RegistrationViewModel
+<h2>@ViewBag.Title</h2>
+@using (@Html.BeginForm((string)ViewBag.Method, "Registration", FormMethod.Post, new { id = "RegistrationForm", @class = "form-horizontal" }))
+{
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true)
+    @Html.Hidden("CanProceed", "false");  
+    @Html.Partial("_Record")
+    @Html.Partial("_Identification")
+    @Html.Partial("_Locations")
+	@Html.Partial("_Employment")
+	@Html.Partial("_Availability")
+}
+<script type="text/javascript">
+    $(function () 
+    {
+        $('.reg-panel').hide();
+        $('#record').show();
+        $('button.btn-next').click(function () 
+        {
+            if ($('#CanProceed').val() == "true") 
+            {
+                var curr = $(this).data("curr");
+                var next = $(this).data("next");
+                $('#' + curr).hide(500);
+                $('#' + next).show(500);
+                $('#CanProceed').val() == "false";
+            }
+        });
+        $('button.btn-prev').click(function () 
+        {
+            var curr = $(this).data("curr");
+            var prev = $(this).data("prev");
+            $('#' + curr).hide(500);
+            $('#' + prev).show(500);
+        });
+    })
+</script>

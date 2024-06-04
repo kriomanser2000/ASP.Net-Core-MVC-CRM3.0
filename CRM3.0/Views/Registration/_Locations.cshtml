@@ -1,0 +1,149 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+﻿@model CRM3._0.ViewModels.RegistrationViewModel
+<div id="locations" class="row-fluid reg-panel">
+	<div class="well">
+        <h3>Tell Us Where You Live</h3>
+        <div class="box-blue">        
+            @Html.FormLineTextBoxFor(m => m.HomeAddress.Street1, true) 
+            @Html.FormLineTextBoxFor(m => m.HomeAddress.Street2, true) 
+            @Html.FormLineDropDownListFor(m => m.HomeAddress.StateCode, (IEnumerable<SelectListItem>) ViewBag.States, true)
+            <div class="control-group">
+                <label for="HomeAddress_CityName" class="control-label control-label-big">City</label>
+                <div class="controls">
+                    @Html.DropDownList("HomeAddress_CityName", (IEnumerable<SelectListItem>) ViewBag.BlankSelectDropdownList)
+                </div>
+            </div>
+            @Html.FormLineTextBoxFor(m => m.HomeAddress.PostalCode5, true) 
+            @Html.HiddenFor(m => m.HomeAddress.CityId)
+        </div>
+        <div class="box-grey">         
+		    <div class="control-group">
+                @Html.LabelFor(m => m.HomePhone, new { @class = "control-label control-label-big" })
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.HomePhone.AreaCode, new { @class = "input-mini", placeholder = "Area Code", data_mask = "999" })&nbsp;
+                    @Html.TextBoxFor(m => m.HomePhone.PrefixCode, new { @class = "input-mini", placeholder = "Prefix", data_mask = "999" })&nbsp;
+                    @Html.TextBoxFor(m => m.HomePhone.SuffixCode, new { @class = "input-small", placeholder = "Suffix", data_mask = "9999" })
+                </div>
+		    </div>
+		    <div class="control-group">
+                @Html.LabelFor(m => m.WorkPhone, new { @class = "control-label control-label-big" })
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.WorkPhone.AreaCode, new { @class = "input-mini", placeholder = "Area Code", data_mask = "999" })&nbsp;
+                    @Html.TextBoxFor(m => m.WorkPhone.PrefixCode, new { @class = "input-mini", placeholder = "Prefix", data_mask = "999" })&nbsp;
+                    @Html.TextBoxFor(m => m.WorkPhone.SuffixCode, new { @class = "input-small", placeholder = "Suffix", data_mask = "9999" })
+                </div>
+		    </div>
+        </div>
+        <div class="control-group">
+	        <div class="controls">
+		        <button type="button" 
+                        class="btn btn-large btn-prev" 
+                        data-curr="locations"
+                        data-prev="identification">Previous Page</button>
+		        <button type="button"
+                        id="LocationToNextButton" 
+                        class="btn btn-primary btn-large btn-next" 
+                        data-curr="locations"
+                        data-next="employment">Next Page</button>
+	        </div>
+        </div>
+	</div>
+</div>
+<script type="text/javascript">
+    $(function () 
+    {
+        $('#HomeAddress_StateCode').chainSelect('#HomeAddress_CityName', '@Url.Content("~/Default/Cities")',
+        {
+
+        });
+        $('#HomeAddress_CityName').change(function () 
+        {
+            $('#HomeAddress_CityId').val($('#HomeAddress_CityName :selected').val());
+        });
+        $('#LocationToNextButton').click(function () 
+        {
+            if ($('#HomeAddress_Street1').val() == "") 
+            {
+                alert("Please enter a street address.");
+                $('#HomeAddress_Street1').focus();
+                $('#CanProceed').val("false");
+                return false;
+            } 
+            else 
+            {
+                $('#CanProceed').val("true");
+            }
+            if ($('#HomeAddress_StateCode').val() == 0)
+            {
+                alert("Please select a state from the dropdown list.");
+                $('#HomeAddress_StateCode').focus();
+                $('#CanProceed').val("false");
+                return false;
+            } 
+            else 
+            {
+                $('#CanProceed').val("true");
+            }
+            if ($('#HomeAddress_CityId').val() == 0) 
+            {
+                alert("Please enter a city from the dropdown list.");
+                $('#HomeAddress_CityId').focus();
+                $('#CanProceed').val("false");
+                return false;
+            } 
+            else 
+            {
+                $('#CanProceed').val("true");
+            }
+            if ($('#HomeAddress_PostalCode5').val() == 0) 
+            {
+                alert("Please enter a postal/zipcode.");
+                $('#HomeAddress_PostalCode5').focus();
+                $('#CanProceed').val("false");
+                return false;
+            } 
+            else 
+            {
+                $('#CanProceed').val("true");
+            }
+            if ($('#HomePhone_AreaCode').val() == "") 
+            {
+                alert("Please enter a home phone area code.");
+                $('#HomePhone_AreaCode').focus();
+                $('#CanProceed').val("false");
+                return false;
+            } 
+            else 
+            {
+                $('#CanProceed').val("true");
+            }
+            if ($('#HomePhone_PrefixCode').val() == "") 
+            {
+                alert("Please enter a home phone prefix.");
+                $('#HomePhone_PrefixCode').focus();
+                $('#CanProceed').val("false");
+                return false;
+            } 
+            else 
+            {
+                $('#CanProceed').val("true");
+            }
+            if ($('#HomePhone_SuffixCode').val() == "") 
+            {
+                alert("Please enter a postal/zipcode.");
+                $('#HomePhone_SuffixCode').focus();
+                $('#CanProceed').val("false");
+                return false;
+            } 
+            else 
+            {
+                $('#CanProceed').val("true");
+            }
+        });
+    });
+</script>

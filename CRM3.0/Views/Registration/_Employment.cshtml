@@ -1,0 +1,90 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+﻿@model CRM3._0.ViewModels.RegistrationViewModel
+<div id="employment" class="row-fluid reg-panel">
+	<div class="well">
+        <h3>Your Employment History</h3>
+		<div class="box-blue">
+            @Html.FormLineDropDownListFor(m => m.WorkedForDoC, (IEnumerable<SelectListItem>) ViewBag.YesNo, true)
+            @Html.FormLineTextBoxFor(m => m.WhereDidYouWork, true, new { data_child_of = "WorkedForDoC", @readonly = true, data_val = "false" })
+            @Html.FormLineTextBoxFor(m => m.WhenWorkedStarted, true, new { data_child_of = "WorkedForDoC", data_mask = "99/99/9999", @readonly = true, data_val = "false" })
+            @Html.FormLineTextBoxFor(m => m.WhenWorkedEnded, true, new { data_child_of = "WorkedForDoC", data_mask = "99/99/9999" , @readonly = true, data_val = "false" })
+		</div>
+		<div class="box-grey">
+            @Html.FormLineDropDownListFor(m => m.RelativesWorkingForDoC, (IEnumerable<SelectListItem>) ViewBag.YesNo, true)
+            @Html.FormLineTextBoxFor(m => m.RelativeWorkingForDoCName, true, new { data_child_of = "RelativesWorkingForDoC", @readonly = true, data_val = "false" })
+            @Html.FormLineTextBoxFor(m => m.RelativeWorkingForDoCRelationType, true, new { data_child_of = "RelativesWorkingForDoC", @readonly = true, data_val = "false" })
+		</div>
+        <h3>Department of Corrections Information</h3>
+        <div class="box-blue">
+            @Html.FormLineDropDownListFor(m => m.HasRelationIncarcerated, (IEnumerable<SelectListItem>) ViewBag.YesNo, true)
+            @Html.FormLineTextBoxFor(m => m.RelationIncarceratedName, true, new { data_child_of = "HasRelationIncarcerated", @readonly = true })
+            @Html.FormLineTextBoxFor(m => m.RelationIncarceratedNumber, true, new { data_child_of = "HasRelationIncarcerated", @readonly = true })
+            @Html.FormLineTextBoxFor(m => m.RelationIncarceratedType, true, new { data_child_of = "HasRelationIncarcerated", @readonly = true })
+        </div>
+		<div class="control-group">
+			<div class="controls">
+				<button type="button" 
+                        class="btn btn-large btn-prev"
+                        data-curr="employment"
+                        data-prev="locations">Previous Page</button>
+
+                <button type="button" 
+                        class="btn btn-primary btn-large btn-next" 
+                        data-curr="employment"
+                        data-next="availability">Next Page</button>
+			</div>
+		</div>
+	</div>
+</div> 
+<script type="text/javascript">
+	$(function () 
+	{
+	    $('#WorkedForDoC').change(function () 
+		{
+	        var worked = $('#WorkedForDoC :selected').text();
+	        if (worked == "Yes") 
+			{
+	            $('*[data-child-of="WorkedForDoC"]').prop("readonly", false);
+	            $('*[data-child-of="WorkedForDoC"]').data("val", "true");
+	        } 
+			else 
+			{
+	            $('*[data-child-of="WorkedForDoC"]').prop("readonly", true);
+	            $('*[data-child-of="WorkedForDoC"]').data("val", "false");
+	        }
+	    })
+	    $('#RelativesWorkingForDoC').change(function () 
+		{
+	        var yesno = $('#RelativesWorkingForDoC :selected').text();
+	        if (yesno == "Yes") 
+			{
+	            $('*[data-child-of="RelativesWorkingForDoC"]').prop("readonly", false);
+	            $('*[data-child-of="RelativesWorkingForDoC"]').data("val", "true");
+	        } 
+			else 
+			{
+	            $('*[data-child-of="RelativesWorkingForDoC"]').prop("readonly", true);
+	            $('*[data-child-of="RelativesWorkingForDoC"]').data("val", "false");
+	        }
+	    });
+	    $('#HasRelationIncarcerated').change(function () 
+		{
+	        var yesno = $('#HasRelationIncarcerated :selected').text();
+	        if (yesno == "Yes") 
+			{
+	            $('*[data-child-of="HasRelationIncarcerated"]').prop("readonly", false);
+	            $('*[data-child-of="HasRelationIncarcerated"]').data("val", "true");
+	        } 
+			else 
+			{
+	            $('*[data-child-of="HasRelationIncarcerated"]').prop("readonly", true);
+	            $('*[data-child-of="HasRelationIncarcerated"]').data("val", "false");
+	        }
+	    });
+	});
+</script>
