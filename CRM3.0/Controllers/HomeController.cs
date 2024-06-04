@@ -1,32 +1,42 @@
+using CRM3._0.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 using CRM3._0.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace CRM3._0.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : DefaultController
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController()
         {
-            _logger = logger;
+
         }
 
-        public IActionResult Index()
+        public HomeController(IConfiguration config)
+        {
+            this._config = config;
+        }
+
+        public ActionResult Index()
+        {
+            ViewBag.UserRole = Helpers.AccountHelper.GetUserRoleByUsername(ref this._db, User.Identity.Name);
+
+            return View();
+        }
+
+        public ActionResult About()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        public ActionResult Contact()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
