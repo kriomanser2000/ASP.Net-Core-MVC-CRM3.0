@@ -2,4 +2,96 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewBag.Title = "Manage Public Calendar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+﻿@model CRM3._0.Models.CalendarEvent
+<style type="text/css">
+    .well 
+	{
+        padding-bottom: 0px;
+    }
+</style>
+<h2>@ViewBag.Title</h2>
+<div class="btn-group">
+	<a class="btn" href="~/Calendar/Create"><i class="icon-plus"></i>&nbsp;Add Event</a>
+</div>
+<br/>
+<div class="well">
+    <table class="table table-bordered table-striped table-hover">
+	    <thead>
+		    <tr>
+			    <th>Event ID</th>
+			    <th>Event Name</th>
+			    <th>Begins</th>
+			    <th>Ends</th>
+			    <th>Actions</th>
+		    </tr>
+	    </thead>
+	    <tbody>
+        @foreach (var item in this.ViewBag.Events)
+        {		
+	        <tr>
+		        <td>@item.id</td>
+		        <td>@item.EventName</td>
+		        <td>@String.Format("{0:dd/MM/yyyy hh:mm}", @item.EventBegins)</td>
+		        <td>@String.Format("{0:dd/MM/yyyy hh:mm}", @item.EventEnds)</td>
+		        <td>
+			        <a class="btn" 
+				        id="EditEvent" 
+				        href="~/Calendar/Edit/@item.id" 
+				        title="Edit Event"><i class="icon-edit"></i></a>
+			        <button class="btn deleteEvent" 
+				        id="DeleteEvent" 
+				        data-eventid="@item.id" 
+				        title="Delete Event"><i class="icon-remove"></i></button>
+		        </td>
+	        </tr>
+        }
+	    </tbody>
+	    <tfoot>
+		    <tr>
+			    <th>Event ID</th>
+			    <th>Event Name</th>
+			    <th>Begins</th>
+			    <th>Ends</th>
+			    <th>Actions</th>
+		    </tr>			
+	    </tfoot>
+    </table>
+</div>
+<div class="well">
+	<div class="control-group">
+		<div class="controls">
+			<a href="@Request.UrlReferrer" class="btn btn-primary">Back</a>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+    $('#NavList li').removeClass("active");
+    $('#NavCalendar').addClass("active");
+    $('.deleteEvent').click(function () 
+	{
+		var r = confirm("Are you sure you want to delete the event?");
+		if (r == true) 
+		{
+			$.ajax({
+				type: "POST",
+				url: '@Url.Content("~/Calendar/Delete/")' + $(this).data("eventid"),
+				success: function(data) 
+				{
+					if (data.Message == "success") 
+					{
+						location.reload();
+					} 
+					else 
+					{
+						alert('Failed to delete calendar event.');
+					}
+				}
+			});
+		}
+		return false;
+	});
+</script>

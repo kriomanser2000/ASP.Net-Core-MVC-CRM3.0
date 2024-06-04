@@ -5,9 +5,9 @@
 	ViewBag.Title = "Create User Profile";
 	ViewBag.Method = "Create";
 	Layout = "~/Views/Shared/_Dashboard.cshtml";
-}
+} 
 
-﻿@model CRM3._0.ViewModels.LoginViewModel
+﻿@model CRM3._0.ViewModels.UserProfileViewModel
 <h2>@ViewBag.Title</h2>
 @using (Html.BeginForm((string)ViewBag.Method, "Calendar", FormMethod.Post, new { @class = "form-horizontal" }))
 {

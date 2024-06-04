@@ -2,4 +2,62 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewBag.Title = "Calendar Events";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
 }
+
+﻿@model CRM3._0.ViewModels.EventListViewModel
+<h2>@ViewBag.Title</h2>
+<div class="well">
+	<table class="table table-bordered table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Event ID</th>
+				<th>Event Name</th>
+				<th>Begins</th>
+				<th>Ends</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in this.ViewBag.Events)
+			{
+				<tr>
+					<td>@item.id</td>
+					<td>@item.EventName</td>
+					<td>@String.Format("{0:dd/MM/yyyy hh:mm}", @item.EventBegins)</td>
+					<td>@String.Format("{0:dd/MM/yyyy hh:mm}", @item.EventEnds)</td>
+					<td>
+						<a class="btn"
+						   id="EditEvent"
+						   href="~/Calendar/Edit/@item.id"
+						   title="Edit Event"><i class="icon-edit"></i></a>
+
+						<button class="btn deleteEvent"
+								id="DeleteEvent"
+								data-eventid="@item.id"
+								title="Delete Event">
+							<i class="icon-remove"></i>
+						</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>Event ID</th>
+				<th>Event Name</th>
+				<th>Begins</th>
+				<th>Ends</th>
+				<th>Actions</th>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+<div class="well">
+	<div class="control-group">
+		<div class="controls">
+			<a href="@Request.UrlReferrer" class="btn btn-primary">Back</a>
+		</div>
+	</div>
+</div>

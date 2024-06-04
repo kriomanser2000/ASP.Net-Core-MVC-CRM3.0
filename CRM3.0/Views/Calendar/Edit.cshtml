@@ -2,4 +2,10 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewBag.Title = "Edit Calendar Entry";
+    ViewBag.Method = "Edit";
 }
+
+<h2>@ViewBag.Title</h2>
+@Html.Hidden("InputMode", (string)ViewBag.Method)
+@Html.Partial("_Form")

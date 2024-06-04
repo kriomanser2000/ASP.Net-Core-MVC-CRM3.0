@@ -3,3 +3,110 @@
 *@
 @{
 }
+
+﻿@model CRM3._0.ViewModels.EventViewModel
+@using (Html.BeginForm((string)ViewBag.Method, "Calendar", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="well">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(m => m.id)
+        @Html.HiddenFor(m => m.CreatorId)
+        <div class="box-blue">
+            @Html.FormLineTextBoxFor(m => m.EventName, true, new { @class = "input-xxlarge" })
+            @Html.FormLineDropDownListFor(m => m.EventType, (IEnumerable<SelectListItem>)ViewBag.EventType, true)
+            <div class="control-group">
+                @Html.LabelFor(m => m.EventDetails, new { @class = "control-label control-label-big" })
+                <div class="controls">
+                    @Html.TextAreaFor(m => m.EventDetails, new { @class = "input-xxlarge" })
+                </div>
+            </div>
+            @Html.FormLineTextBoxFor(m => m.EventUrl, true, new { @class = "input-xxlarge" })
+        </div>
+        <div class="box-orange hide" id="MenteeSelect">
+            @Html.FormLineDropDownListFor(m => m.MenteeId, (IEnumerable<SelectListItem>)ViewBag.Mentors, true)
+        </div>
+        <div class="box-orange hide" id="MentorSelect">
+            @Html.FormLineDropDownListFor(m => m.MentorId, (IEnumerable<SelectListItem>)ViewBag.Mentors, true)
+        </div>
+        <div class="box-grey">
+            @Html.FormLineDropDownListFor(m => m.AllDayEvent, (IEnumerable<SelectListItem>)@ViewBag.YesNo, true)
+            @Html.FormLineTextBoxFor(m => m.EventBegins, true, new { @class = "form_datetime", data_date_format = "mm-dd-yyyy HH:ii p" })
+            @Html.FormLineTextBoxFor(m => m.EventEnds, true, new { @class = "form_datetime" })
+        </div>
+    </div>
+    <div class="well">
+        @if (WebSecurity.IsAuthenticated)
+        {
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        }
+        <a href="@Request.UrlReferrer" class="btn">Cancel</a>
+    </div>
+}
+<script type="text/javascript">
+    $(function () 
+    {
+        $('#NavList li').removeClass("active");
+        $('#NavCalendar').addClass("active");
+        var now = new Date();
+        function setupForm() 
+        {
+            if ($('#id').val() == "") 
+            {
+                $('#id').val("0");
+            }
+            if ($('#CreatorId').val() == "") 
+            {
+                $('#CreatorId').val("0");
+            }
+            $(".form_datetime").datetimepicker({
+                format: 'mm/dd/yyyy H:ii:ss p',
+                showMeridian: true,
+                todayBtn: true
+            });
+        }
+        function manageControls(enabled) 
+        {
+            if (enabled == 0) 
+            {
+                console.log("enabled");
+                $('#EventBegins').attr('disabled', false);
+                $('#EventEnds').attr('disabled', false);
+            } 
+            else 
+            {
+                console.log("disabled");
+                $('#EventBegins').attr('disabled', true);
+                $('#EventEnds').attr('disabled', true);
+            }
+        }
+        $('#AllDayEvent').change(function () 
+        {
+            var allDayEvent = this.val();
+            manageControls(allDayEvent);
+        });
+        $('#EventType').change(function () 
+        {
+            var eventType = $("#EventType :selected").text();
+            if (eventType == "Mentee Meeting Request") 
+            {
+                $('#MentorSelect').fadeOut(500, function () 
+                {
+                    $('#MenteeSelect').fadeIn(500);
+                });
+            } 
+            else if (eventType == "Mentor Meeting Request") 
+            {
+                $('#MenteeSelect').fadeOut(500, function () 
+                {
+                    $('#MentorSelect').fadeIn(500);
+                });
+            } 
+            else 
+            {
+                $('#MenteeSelect').fadeOut(500);
+                $('#MentorSelect').fadeOut(500);
+            }
+        });
+        setupForm();
+    });
+</script>
