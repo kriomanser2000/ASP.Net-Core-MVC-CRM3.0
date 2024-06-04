@@ -1,0 +1,38 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+﻿@{
+	ViewBag.Title = "About the JREC Mentor Management System";
+}
+
+<h2>@ViewBag.Title.</h2>
+<div class="well">
+	<div class="box-blue">
+		<p>
+			The JREC Mentor Management Systems (MMS) is a state-of-the-art web application that provides
+			online management of mentors that assist in helping ex-convicts re-enter society thus making
+			them more productive members of society.
+		</p>
+	</div>
+	<h3>Technologies Used</h3>
+	<div class="box-grey">
+		<ul>
+			<li>Microsoft ASP.Net Framework v4.5</li>
+			<li>ASP.Net MVC Framework 4</li>
+			<li>Entity Framework w/ Code First</li>
+			<li>jQuery Javascript Framework Libraries</li>
+			<li>Twitter Bootstrap CSS/Javascript Libraries</li>
+			<li>HTML5 Compliant Markup</li>
+			<li>Social Media Integration (Currently with Google+)</li>
+			<li>The following components are planned for integration:</li>
+			<li>Dynamic PDF Creation Library</li>
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">
+	$(function () 
+	{
+		$('#NavList li').removeClass("active");
+		$('#NavAbout').addClass("active");
+	});
+</script>

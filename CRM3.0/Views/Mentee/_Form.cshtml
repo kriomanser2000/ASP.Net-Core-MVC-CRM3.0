@@ -1,0 +1,65 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+﻿@model CRM3._0.ViewModels.MenteeViewModel
+@using (Html.BeginForm((string)ViewBag.Method, "Mentee", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="well">
+		@Html.ValidationSummary(true)
+		@Html.HiddenFor(p => p.Mentee.id)
+        <div class="box-blue">
+            @Html.FormLineDropDownListFor(p => p.Mentee.PrefixId, (IEnumerable<SelectListItem>)@ViewBag.Prefixes, true)
+            @Html.FormLineTextBoxFor(p => p.Mentee.FirstName, true)
+            @Html.FormLineTextBoxFor(p => p.Mentee.MiddleInitial, true)
+            @Html.FormLineTextBoxFor(p => p.Mentee.LastName, true)
+            @Html.FormLineDropDownListFor(p => p.Mentee.SuffixId, (IEnumerable<SelectListItem>)@ViewBag.Suffixes, true)
+        </div>
+        <div class="box-grey">
+            @Html.FormLineTextBoxFor(p => p.Mentee.DOB, true, new { data_mask = "99/99/9999" })
+            @Html.FormLineDropDownListFor(p => p.Mentee.GenderId, (IEnumerable<SelectListItem>)@ViewBag.Genders, true)
+            @Html.FormLineDropDownListFor(p => p.Mentee.RaceId, (IEnumerable<SelectListItem>)@ViewBag.Races, true)
+        </div>
+        <h4>Home Address</h4>
+        <div class="box-blue">
+            @Html.HiddenFor(p => p.HomeAddress.id, new { data_val = "false" })
+            @Html.FormLineTextBoxFor(p => p.HomeAddress.Street1, true)
+            @Html.FormLineTextBoxFor(p => p.HomeAddress.Street2, true)
+            @Html.FormLineDropDownListFor(p => p.HomeAddress.StateCode, (IEnumerable<SelectListItem>)@ViewBag.States, true)
+            @Html.FormLineDropDownListFor(p => p.HomeAddress.CityId, (IEnumerable<SelectListItem>)ViewBag.BlankDropdown, true)
+            @Html.FormLineTextBoxFor(p => p.HomeAddress.PostalCode5, true, new { data_mask = "99999" })
+	    </div>
+    </div>
+    <div class="well">
+        <div class="well">
+            <div class="control-group">
+	            <div class="controls">
+		            <button type="submit" class="btn btn-primary">Save Changes</button>
+		            <a href="@Request.UrlReferrer" class="btn">Cancel</a>
+	            </div>
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(function () 
+    {
+        if ($('#InputMode').val() == "CREATE") 
+        {
+            $('#Mentee_id').val("0");
+            $('#HomeAddress_id').val("0");
+        } 
+        else 
+        {
+            if ($('#HomeAddress_id').val() == "") 
+            {
+                $('#HomeAddress_id').val("0");
+            }
+        }
+	    $('#HomeAddress_StateCode').chainSelect('#HomeAddress_CityId', '/Default/Cities',
+        });
+	});
+</script>

@@ -1,0 +1,20 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+﻿@{
+    ViewBag.Title = "Contact the JREC";
+}
+
+<h2>@ViewBag.Title</h2>
+<div class="well">
+    <div class="box-blue">
+        <p>You can contact the Jacksonville ReEntry Center via the following methods:</p>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () 
+    {
+        $('#NavList li').removeClass("active");
+        $('#NavContact').addClass("active");
+    });
+</script>

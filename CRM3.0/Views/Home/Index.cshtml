@@ -1,8 +1,62 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿﻿@{
+	ViewBag.Title = "Home Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="hero-unit">
+	<h1>Become A Mentor Today!</h1>
+	<p>
+		Make a difference by helping those who are serious abouth changing their lives.
+		Being in prison is tough; leaving prison and successfully re-entering society can be tougher.
+		Experience and research has shown that reducing recidivism is one of the most promising
+		methods to help ensure public safety. Mentors make a difference by connecting ex-offenders
+		with all the resources our community can provide.
+	</p>
+	@if (!User.Identity.IsAuthenticated)
+	{
+		<p>
+			@Html.ActionLink("Start Here!", "Register", "Account", null, new { @class = "btn btn-primary btn-large" })&nbsp;
+			@Html.ActionLink("Continue Previous Registration", "Continue", "Registration", null, new { @class = "btn btn-large" })
+		</p>
+	}
 </div>
+<div class="row">
+	<div class="span4">
+		<div class="well temptation-box">
+			<h3>What is JREC?</h3>
+			<p>
+				The Jacksonville Sheriff's Office operates the Jacksonville Reentry Center (JREC)
+				JREC is the portal of entry for all felony offenders released in/or back to Duval County.
+			</p>
+			<p><a class="btn" href="#">View details &raquo;</a></p>
+		</div>
+	</div>
+	<div class="span4">
+		<div class="well temptation-box">
+			<h3>What Is Mentorship?</h3>
+			<p>
+				Upon release from incarceration, mentor provide clients with assistance with day-to-day
+				functions, such as life skills and filing for social services.  JREC, through mentorship
+				offers clients hope and the education needed to re-enter society.
+			</p>
+			<p><a class="btn" href="#">View details &raquo;</a></p>
+		</div>
+	</div>
+	<div class="span4">
+		<div class="well temptation-box">
+			<h3>Our Mission</h3>
+			<p>
+				To successfully reintegrate former felony offenders by providing holistic, direct services
+				including case-management, to promote their opportunities to become aproductive members
+				of our community; reduce recidivism; and increase public safety.
+			</p>
+			<p><a class="btn" href="#">View details &raquo;</a></p>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(function () 
+	{
+		$('#NavList li').removeClass("active");
+		$('#NavHome').addClass("active");
+		MMSUtils.equalizeHeight($('.temptation-box'));
+	});
+</script>

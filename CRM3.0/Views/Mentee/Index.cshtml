@@ -1,0 +1,87 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+
+﻿@model CRM3._0.ViewModels.MenteeViewModel
+<h2>Mentees</h2>
+<div class="btn-group">
+	<a class="btn" href="~/Mentee/Create"><i class="icon-plus"></i>&nbsp;Add Mentee</a>
+    <a class="btn" href="~/Mentee/Assign"><i class="icon-plus"></i>&nbsp;Assign Mentee to Mentor</a>
+</div>
+<br/>
+<div class="well">
+    @if (this.ViewBag.Mentees != null)
+    {
+	    <table class="table table-bordered table-striped table-hover">
+		    <thead>
+			    <tr>
+				    <th>Last Name</th>
+				    <th>First Name</th>
+                    <th>Mentor</th>
+				    <th>Actions</th>
+			    </tr>
+		    </thead>
+		    <tbody>
+	    @foreach (var item in this.ViewBag.Mentees)
+	    {		
+		    <tr>
+			    <td>@item.Mentee.LastName</td>
+			    <td>@item.Mentee.FirstName</td>
+                <td>&nbsp;</td>
+			    <td>
+				    <a class="btn" 
+					    id="EditMentee" 
+					    href="~/Mentee/Edit/@item.Mentee.id" 
+					    title="Edit Mentee"><i class="icon-edit"></i></a>
+				    <button class="btn" 
+					    id="DeleteMentee" 
+					    data-menteeid="@item.Mentee.id" 
+					    title="Delete Mentee"><i class="icon-remove"></i></button>
+			    </td>
+		    </tr>
+	    }
+		    </tbody>
+		    <tfoot>
+			    <tr>
+				    <th>Last Name</th>
+				    <th>First Name</th>
+                    <th>Mentor</th>
+				    <th>Actions</th>
+			    </tr>			
+		    </tfoot>
+	    </table>
+    } 
+	else
+    {
+	    <p>No mentees found.</p>
+    }
+</div>
+<script type="text/javascript">
+	$('#DeleteMentee').click(function () 
+	{
+		var r = confirm("Are you sure you want to delete the selected mentee?");
+		if (r == true) 
+		{
+			$.ajax({
+				type: "POST",
+				url: '@Url.Content("~/Mentee/Delete/")' + $(this).data("menteeid"),
+				success: function(data) 
+				{
+					if (data.Message == "success") 
+					{
+						location.reload();
+					} 
+					else 
+					{
+						alert('Failed to delete mentee.');
+					}
+				}
+			});
+		}
+		return false;
+	});
+</script>
