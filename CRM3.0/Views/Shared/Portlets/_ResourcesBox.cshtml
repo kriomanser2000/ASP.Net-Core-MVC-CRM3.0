@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+﻿<div class="span4 box-container portlet">
+	<h3>Mentor Resources</h3>
+	<div class="box-body">
+		<div class="btn-group" style="border-bottom: solid 1px #dcdcdc" ">
+			<form class="form-search" style="padding: 0 5px; margin: 10px 0">
+				<div class="input-append">
+					<input type="text" class="span2 search-query" style="width: 250px">
+					<button type="submit" class="btn">Search</button>
+				</div>
+			</form>
+		</div>
+		<div id="list-resources">
+			<ul class="message-list">
+		@foreach (CRM3._0.ViewModels.ResourceViewModel item in ViewBag.Resources)
+		{
+					<li>
+						<div class="row-fluid">
+							<div class="span9">
+								Resource:&nbsp;@Html.ActionLink(item.Name, "View", "Resource", new { id = item.id })<br />
+								Description:&nbsp;@item.Description
+							</div>
+							<div class="span3">
+								<a class="btn pull-right" href="@Url.Content(item.RelativeUrl)">
+									<i class="icon-download"></i>
+								</a>
+							</div>
+						</div>
+					</li>
+		}
+			</ul>
+		</div>
+	</div>
+	<h4>@Html.ActionLink("View More", "Index", "Resource")</h4>
+</div>

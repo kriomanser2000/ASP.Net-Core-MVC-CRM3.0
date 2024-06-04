@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -11,20 +17,27 @@
 			"~/Content/css/site")
 	@Scripts.Render(
 			"~/bundles/jquery",
+			"~/bundles/jquery-val",
+			"~/bundles/jquery-plugins",
 			"~/bundles/mms")
 </head>
-<body>
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
 	<div id="header">
-		<div class="branding">Jacksonville ReEntry Center</div>
+		<div class="branding">JREC Mentor Management System &mdash; @ViewBag.Title</div>
 	</div>
 	@Html.Partial("_SiteNav")
-	<div class="container">
+	<div class="container-semifluid">
 		@RenderBody()
 	</div>
 	@Scripts.Render(
-			"~/bundles/jquery-val",
-			"~/bundles/jquery-plugins",
 			"~/bundles/bootstrap",
 			"~/bundles/fullcalendar")
+	<script type="text/javascript">
+		$(function () 
+		{
+			$('#NavList li').removeClass("active");
+			$('#NavAccount').addClass("active");
+		});
+	</script>
 </body>
 </html>

@@ -1,0 +1,27 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+﻿<div class="span4 box-container portlet">
+	<h3>My Messages</h3>
+	<div class="box-body">
+		<div class="btn-group" style="padding: 10px; border-bottom: solid 1px #dcdcdc">
+			@Html.ActionLink("New Message", "Create", "Messaging", null, new { @class = "btn btn-info" })
+		</div>
+		<div id="list-messages">
+			<ul class="message-list">
+				@foreach (CRM3._0.ViewModels.MessageViewModel msg in ViewBag.Messages)
+				{
+					<li>
+						<i class="icon-envelope"></i>
+						<b>From:</b>&nbsp;@msg.FromUser<br /><b>Subject:</b>
+						@Html.ActionLink(msg.Subject, "View/" + msg.MessageId, "Messaging")
+					</li>
+				}
+			</ul>
+		</div>
+	</div>
+	<h4>@Html.ActionLink("View More", "Index", "Messaging")</h4>
+</div>

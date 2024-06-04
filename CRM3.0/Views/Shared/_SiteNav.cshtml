@@ -1,0 +1,55 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+﻿@{
+	ViewBag.CurrentUser = HttpContext.Current.User;
+	MMS.Models.UserProfile currentUser = (MMS.Models.UserProfile)HttpContext.Current.Items["CurrentUser"];
+}
+
+<div class="navbar">
+	<div class="navbar-inner">
+		<div class="container">
+			<div class="nav-collapse collapse">
+				<ul class="nav pull-left">
+					@{
+						if (User.Identity.IsAuthenticated)
+						{
+							<li><a href="/Account/Manage">Welcome <strong>@ViewBag.CurrentUser.Identity.Name</strong></a></li>
+						}
+						else
+						{
+							<li><a href="/Account/Manage">Welcome <strong>Guest</strong></a></li>
+						}
+					}
+				</ul>
+				<ul id="NavList" class="nav pull-right">
+					<li id="NavHome"><a href="~/">Home</a></li>
+					<li id="NavCalendar"><a href="~/Calendar">Calendar</a></li>
+					<li id="NavAbout"><a href="~/Home/About">About</a></li>
+					<li id="NavContact"><a href="~/Home/Contact">Contact</a></li>
+					<li id="NavAccount" class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							@if (!WebSecurity.IsAuthenticated)
+							{
+								<li><a href="~/Account/Login">Login</a></li>
+								<li class="divider"></li>
+								<li><a href="~/Account/Help">Account Help</a></li>
+							}
+							else
+							{
+								<li><a href="~/Mentor">Mentor Dashboard</a></li>
+								<li><a href="~/Chaplain">Chaplain Dashboard</a></li>
+								<li><a href="~/Staff">JREC Staff Dashboard</a></li>
+								<li class="divider"></li>
+								<li><a href="~/Account/Manage">Manage Your Account</a></li>
+								<li class="divider"></li>
+								<li><a href="~/Account/Logout">Logout @WebSecurity.CurrentUserName</a></li>
+							}
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,27 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+﻿<div class="span4 box-container portlet">
+	<h3>Mentee Contact Request</h3>
+	<div class="box-body">
+		<div class="btn-group" style="padding: 10px; border-bottom: solid 1px #dcdcdc" ">
+			<button id="CheckForRequests" class="btn">Check</button>
+		</div>
+		<div id="list-calendar">
+			<ul class="message-list">
+		@*			@foreach (MMS.ViewModels.EventViewModel evt in ViewBag.Events)
+				{
+				<li>
+				<i class="icon-calendar"></i>
+				<b>Event:</b>@Html.ActionLink(evt.EventName, "View/" + evt.EventId, "Calendar")<br />
+				<b>Date/Time:</b>&nbsp;@evt.StartDate
+				</li>
+				}*@
+			</ul>
+		</div>
+	</div>
+	<h4>@Html.ActionLink("View More", "Index", "Calendar")</h4>
+</div>

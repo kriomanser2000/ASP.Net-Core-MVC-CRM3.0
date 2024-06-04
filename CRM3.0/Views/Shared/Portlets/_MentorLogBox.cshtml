@@ -1,0 +1,27 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+﻿<div class="span4 box-container sortable">
+	<h3>Contact Logging</h3>
+	<div class="box-body">
+		<div class="btn-group" style="padding: 10px; border-bottom: solid 1px #dcdcdc" ">
+		@Html.ActionLink("New Contact Log", "Log", "Mentor", null, new { @class = "btn btn-info" })
+		</div>
+		<div id="list-logs">
+			<ul class="message-list">
+		@foreach (CRM3._0.ViewModels.ContactLogViewModel log in ViewBag.Logs)
+		{
+					<li>
+						<i class="icon-pencil"></i>
+						<b>Date:</b>&nbsp;@log.ContactDate<br /><b>Mentee:</b>
+				@Html.ActionLink(log.MenteeName, "Log", "Mentor", new { id = log.ContactLogId })
+					</li>
+		}
+			</ul>
+		</div>
+	</div>
+	<h4>@Html.ActionLink("View More", "Log", "Mentor")</h4>
+</div>
