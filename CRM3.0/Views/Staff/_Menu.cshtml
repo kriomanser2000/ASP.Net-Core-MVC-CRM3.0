@@ -1,0 +1,102 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+﻿<div class="span4 sidebar-nav span4 box-container portlet">
+	<h3>Staff &amp; Administrators Menu</h3>
+	<div class="box-body-tall">
+		<ul class="nav nav-list">
+			<li class="nav-header">Mentor Application Management</li>
+			<li>
+				<a href="@Url.Action("List", "Registration")">
+					<i class="icon-th-list"></i>&nbsp;View Mentor Applications
+				</a>
+			</li>
+			<li class="nav-header">Mentor Management</li>
+			<li>
+				<a href="@Url.Action("List", "Mentor")">
+					<i class="icon-th-list"></i>&nbsp;View Mentor Profiles
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Create", "Mentor")">
+					<i class="icon-plus"></i>&nbsp;Create Mentor Profile
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Logs", "Mentor")">
+					<i class="icon-list-alt"></i>&nbsp;View Mentor Logs
+				</a>
+			</li>
+			<li class="nav-header">Mentee Management</li>
+			<li>
+				<a href="@Url.Action("Index", "Mentee")">
+					<i class="icon-th-list"></i>&nbsp;View Mentees
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Create", "Mentee")">
+					<i class="icon-plus"></i>&nbsp;Create Mentee Profile
+				</a>
+			</li>
+			<li class="nav-header">User Management</li>
+			<li>
+				<a href="@Url.Action("Index", "Account")">
+					<i class="icon-th-list"></i>&nbsp;View Users
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Create", "Account")">
+					<i class="icon-th-list"></i>&nbsp;Create User
+				</a>
+			</li>
+			<li class="nav-header">Ministry Management</li>
+			<li>
+				<a href="@Url.Action("Index", "Ministry")">
+					<i class="icon-th-list"></i>&nbsp;View Ministries
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Create", "Ministry")">
+					<i class="icon-th-list"></i>&nbsp;Create Ministry
+				</a>
+			</li>
+			<li class="nav-header">Calendar Management</li>
+			<li>
+				<a href="@Url.Action("Manage", "Calendar")">
+					<i class="icon-th-list"></i>&nbsp;View Events
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Create", "Calendar")">
+					<i class="icon-plus"></i>&nbsp;Create Event
+				</a>
+			</li>
+			<li class="nav-header">Signup Management</li>
+			<li>
+				<a href="@Url.Action("List", "Signup")">
+					<i class="icon-th-list"></i>&nbsp;View Event Signups
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Create", "Signup")">
+					<i class="icon-plus"></i>&nbsp;Create Event Signup
+				</a>
+			</li>
+			<li class="nav-header">Resource Management</li>
+			<li>
+				<a href="@Url.Action("Index", "Resource")">
+					<i class="icon-th-list"></i>&nbsp;View Resources
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Create", "Resource")">
+					<i class="icon-plus"></i>&nbsp;Create Resource
+				</a>
+			</li>
+		</ul>
+	</div>
+	<h4>&nbsp;</h4>
+</div>

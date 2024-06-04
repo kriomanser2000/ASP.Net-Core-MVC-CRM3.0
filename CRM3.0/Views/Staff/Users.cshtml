@@ -1,0 +1,62 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+	ViewBag.Title = "Users";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+﻿@model CRM3._0.ViewModels.UserProfileViewModel
+<h2>Users</h2>
+<div class="btn-group">
+	<a class="btn" href="~/Staff/AddUser"><i class="icon-plus"></i>&nbsp;Add User</a>
+</div>
+@if (this.ViewBag.Users != null)
+{
+	<table class="table table-bordered table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Username</th>
+				<th>Last Name</th>
+				<th>First Name</th>
+				<th>User Type</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+		@foreach (MMS2.ViewModels.UserProfileViewModel item in this.ViewBag.Users)
+		{		
+			<tr>
+				<td>@item.UserProfile.Username</td>
+				<td>@item.Person.LastName</td>
+				<td>@item.Person.FirstName</td>
+				<td>@item.UserRole.Name</td>
+				<td>@item.UserProfile.StatusId</td>
+				<td>
+					<a class="btn" 
+						id="EditUser" 
+						href="~/Account/Edit/@item.id" 
+						title="Edit User"><i class="icon-edit"></i></a>
+					<button class="btn" 
+						id="DisableUser" 
+						data-eventid="@item.id" 
+						title="Disable User"><i class="icon-remove"></i></button>
+				</td>
+			</tr>
+		}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>Username</th>
+				<th>Last Name</th>
+				<th>First Name</th>
+				<th>User Type</th>
+				<th>Status</th>
+			</tr>		
+		</tfoot>
+	</table>
+} 
+else
+{
+	<p>No users found.</p>
+}
