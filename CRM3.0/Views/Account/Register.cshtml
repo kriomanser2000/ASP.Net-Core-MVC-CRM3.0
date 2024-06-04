@@ -2,4 +2,117 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewBag.Title = "New User Registration";
+    ViewBag.Method = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+﻿@model CRM3._0.ViewModels.LoginViewModel
+<div class="row">
+    <h2>@ViewBag.Title</h2>
+    <div class="well">
+        @using (Html.BeginForm((string)ViewBag.Method, "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.ValidationSummary(true)
+            <p>In order to begin the mentor registration process you must create a username and password for the site.  Please complete the following form:</p>
+            <div class="x-hidden" id="message"></div>
+            <div class="box-blue">
+                @Html.FormLineTextBoxFor(m => m.Username, true)
+                <div class="control-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "control-label control-label-big" })
+                    <div class="controls">
+                        @Html.PasswordFor(m => m.Password, new { @readonly = "true" })
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label control-label-big" })
+                    <div class="controls">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @readonly = "true" })
+                    </div>
+                </div>
+            </div>
+            <div class="x-hidden" id="continue"></div>
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit"
+                            id="SaveButton"
+                            class="btn btn-primary btn-large"
+                            disabled>
+                        Save &amp; Continue
+                    </button>
+
+                    <button type="button" class="btn btn-large btn-prev">Cancel</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () 
+    {
+        $('#Username').blur(function () 
+        {
+            $('#message').fadeOut(500);
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Content("~/Account/Find/")' + $(this).val(),
+                success: function (data) 
+                {
+                    if (data.message == "available") 
+                    {
+                        $('#message').html("<strong>Username is available.</strong>")
+                            .removeClass("box-message-orange")
+                            .addClass("box-message-green")
+                            .fadeIn(500, function () 
+                            {
+                                $(this).delay(2000).fadeOut(1000);
+                            });
+
+                        $('#Password').prop("readonly", false);
+                        $('#ConfirmPassword').prop("readonly", false);
+                    } 
+                    else 
+                    {
+                        $('#message').html("<strong>Username is already taken.</strong>")
+                            .removeClass("box-message-green")
+                            .addClass("box-message-orange")
+                            .fadeIn(500, function () 
+                            {
+                                $(this).delay(2000).fadeOut(1000);
+                            });
+                        $('#Password').prop("readonly", true);
+                        $('#ConfirmPassword').prop("readonly", false);
+                    }
+                }
+            });
+        });
+        $('#ConfirmPassword').blur(function () 
+        {
+            var password = $('#Password').val();
+            var confirm = $('#ConfirmPassword').val();
+            if ((password.length > 0) && (confirm.length > 0) && (password == confirm)) 
+            {
+                $('#SaveButton').prop("disabled", false);
+                $('#SaveButton').focus();
+                $('#continue').html("<strong>Passwords match!  Please click the \"Save &amp; Continue\" button.</strong>")
+                    .removeClass("box-message-orange")
+                    .addClass("box-message-green")
+                    .fadeIn(500, function () 
+                    {
+                        $(this).delay(2000).fadeOut(1000);
+                    });
+            } 
+            else 
+            {
+                $('#message').html("<strong>Password's do not match!</strong>")
+                    .removeClass("box-message-green")
+                    .addClass("box-message-orange")
+                    .fadeIn(500, function () 
+                    {
+                        $(this).delay(2000).fadeOut(1000);
+                    });
+                $('#SaveButton').prop("disabled", true);
+            }
+        });
+    });
+</script>

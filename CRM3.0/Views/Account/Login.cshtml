@@ -2,4 +2,50 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+	ViewBag.Title = "MMS Account Login";
+	ViewBag.Method = "Login";
 }
+
+﻿@model CRM3._0.ViewModels.LoginViewModel
+<div class="modal modal-fixed">
+	@using (Html.BeginForm((string)ViewBag.Method, "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
+	{
+		@Html.AntiForgeryToken()
+		<div class="modal-header">
+			<h3>@ViewBag.Title</h3>
+		</div>
+		<div class="modal-body">
+			@Html.ValidationSummary(true)
+			<div class="control-group">
+				@Html.LabelFor(m => m.Username, new { @class = "control-label" })
+				<div class="controls">
+					@Html.TextBoxFor(m => m.Username)
+					@Html.ValidationMessageFor(m => m.Username)
+				</div>
+			</div>
+			<div class="control-group">
+				@Html.LabelFor(m => m.Password, new { @class = "control-label" })
+				<div class="controls">
+					@Html.PasswordFor(m => m.Password)
+					@Html.ValidationMessageFor(m => m.Password)
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<label class="checkbox">
+						@Html.CheckBoxFor(m => m.RememberMe) Remember Me
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-primary">Login</button>
+			<a href="@Request.UrlReferrer" class="btn">Cancel</a>
+		</div>
+	}
+</div>
+<script type="text/javascript">
+	$(function () {
+		$('#Username').focus();
+	});
+</script>
