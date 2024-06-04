@@ -1,0 +1,108 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+﻿@model CRM3._0.ViewModels.ResourceViewModel
+<style>
+	.progress { position:relative; width:400px; border: 1px solid #ddd; padding: 1px; border-radius: 3px; }
+	.bar { background-color: #B4F5B4; width:0%; height:20px; border-radius: 3px; }
+	.percent { position:absolute; display:inline-block; top:3px; left:48%; }
+</style>
+@using (Html.BeginForm((string)ViewBag.Method, "Resource", FormMethod.Post, new { @encType = "multipart/form-data", @class = "form-horizontal" })) 
+{
+    <div class="well">
+   		@Html.ValidationSummary(true)
+		@Html.HiddenFor(m => m.UploadDate)
+        <div class="box-blue">
+            @Html.FormLineTextBoxFor(m => m.Name, true, new { @class = "input-xxlarge" })
+            @Html.FormLineDropDownListFor(m => m.Type, (IEnumerable<SelectListItem>) ViewBag.ResourceTypes, true)
+			<div class="control-group">
+				@Html.LabelFor(m => m.Description, new { @class="control-label control-label-big" })
+				<div class="controls">
+					@Html.TextAreaFor(m => m.Description, new { @class = "input-xxlarge" })
+				</div>
+			</div>
+        </div>
+        <div class="box-grey">
+			<div class="control-group">
+                <label class="control-label control-label-big">File to Upload</label>
+				<div class="controls">
+					<a href="#" id="BrowseFile">Attach File</a>
+                    <input type="file" id="File" name="File" style="display: none" />
+                    <span id="FileToUpload"></span>
+				</div>
+			</div>
+        </div>
+        <div class="box-orange hide" id="ProgressBlock">
+            <div class="control-group">
+                <label class="control-label control-label-big">Upload Progress</label>
+		        <div class="progress">
+			        <div class="bar"></div >
+			        <div class="percent">0%</div >
+		        </div>
+            </div>  
+            <div class="control-group">
+		        <div id="status"></div>
+            </div>
+        </div>      
+    </div>  
+    <div class="well">
+        <div class="control-group">
+	        <div class="controls">
+		        <button type="submit" class="btn btn-primary">Save &amp; Upload</button>
+		        <a href="@Request.UrlReferrer" class="btn">Cancel</a>
+	        </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    (function () 
+	{
+        function resetForm() 
+		{
+            $('#UploadDate').val((new Date).getTime());
+            $('#Name').val("");
+            $('#Type').val('0');
+            $('#Description').val("");
+            $('#file').val("");
+            $('#Name').focus();
+        }
+        resetForm();
+        $('#BrowseFile').click(function () 
+		{
+            $('#File').click();
+        });
+        $('#File').change(function () 
+		{
+            $('#FileToUpload').html('&nbsp;&nbsp;' + $('#File').val());
+        });
+		var bar = $('.bar');
+		var percent = $('.percent');
+		var status = $('#status');
+		$('form').ajaxForm({
+			beforeSend: function () 
+			{
+			    status.empty();
+				var percentVal = '0%';
+				bar.width(percentVal)
+				percent.html(percentVal);
+				$('#ProgressBlock').fadeIn(100);
+			},
+			uploadProgress: function (event, position, total, percentComplete) 
+			{
+				console.log(percentComplete);
+				var percentVal = percentComplete + '%';
+				bar.width(percentVal)
+				percent.html(percentVal);
+			},
+			complete: function (xhr) 
+			{
+			    status.html(xhr.responseText);
+
+			    resetForm();
+			}
+		});
+	})();
+</script>

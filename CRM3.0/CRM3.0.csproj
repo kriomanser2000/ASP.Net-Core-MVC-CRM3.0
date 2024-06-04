@@ -10,7 +10,6 @@
   <ItemGroup>
     <Folder Include="Views\Stuff\" />
     <Folder Include="Views\Signup\" />
-    <Folder Include="Views\Resource\" />
   </ItemGroup>
 
 </Project>
