@@ -1,0 +1,56 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+ 
+﻿@model CRM3._0.ViewModels.ChaplainViewModel
+@using (Html.BeginForm((string) ViewBag.Method, "Mentor", FormMethod.Post, new { @class = "form-horizontal" })) 
+{
+	<div class="well">
+			@Html.ValidationSummary(true)
+            @Html.HiddenFor(m => m.PersonId)
+            <div class="box-blue">
+			    <div class="control-group">
+				    @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+				    <div class="controls">
+					    @Html.TextBoxFor(m => m.LastName)
+				    </div>
+			    </div>
+			    <div class="control-group">
+				    @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+				    <div class="controls">
+					    @Html.TextBoxFor(m => m.FirstName)
+				    </div>
+			    </div>
+	        </div>
+            <div class="box-grey">
+			    <div class="control-group">
+				    @Html.LabelFor(m => m.MinistryId, new { @class = "control-label" })
+				    <div class="controls">
+					    @Html.DropDownListFor(m => m.MinistryId, (IEnumerable<SelectListItem>)@ViewBag.Ministries)
+				    </div>
+			    </div>
+            </div>
+      
+        }
+	</div>
+    <div class="well">
+        <div class="control-group">
+		    <div class="controls">
+			    @if (WebSecurity.IsAuthenticated)
+                {
+				    <button type="submit" class="btn btn-primary">Save Changes</button>
+                }
+			    <a href="~/Staff" class="btn">Cancel</a>
+		    </div>
+	    </div>
+    </div>
+}
+<script type="text/javascript">
+    $(function () 
+	{
+
+    });
+</script>

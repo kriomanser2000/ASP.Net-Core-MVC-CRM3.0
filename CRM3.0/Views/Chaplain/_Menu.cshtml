@@ -1,0 +1,49 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+﻿<div class="span4 sidebar-nav span4 box-container portlet">
+	<h3>Chaplain Menu</h3>
+	<div class="box-body-tall">
+		<ul class="nav nav-list">
+			<li class="nav-header">Mentor/Mentee Management</li>
+			<li>
+				<a href="@Url.Action("List", "Mentor")">
+					<i class="icon-th-list"></i>&nbsp;View Mentors
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Index", "Mentee")">
+					<i class="icon-th-list"></i>&nbsp;View Mentees
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Assign", "Mentee")">
+					<i class="icon-check"></i>&nbsp;Assign Mentor to Mentee
+				</a>
+			</li>
+			<li class="nav-header">Contact Management</li>
+			<li>
+				<a href="@Url.Action("Requests", "Chaplain")">
+					<i class="icon-th-list"></i>&nbsp;View Contact Requests
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Request", "Mentor")">
+					<i class="icon-pencil"></i>&nbsp;Edit Contact Request
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Logs", "Mentor")">
+					<i class="icon-list-alt"></i>&nbsp;View Mentor Logs
+				</a>
+			</li>
+			<li>
+				<a href="@Url.Action("Feedback", "Mentor")">
+					<i class="icon-comment"></i>&nbsp;Provide Mentor Feedback
+				</a>
+			</li>
+		</ul>
+	</div>
+	<h4>&nbsp;</h4>
+</div>
