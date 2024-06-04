@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>CRM3._0</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Calendar\" />
+    <Folder Include="Views\Chaplain\" />
+    <Folder Include="Views\Facility\" />
+    <Folder Include="Views\Mentee\" />
+    <Folder Include="Views\Messaging\" />
+    <Folder Include="Views\Ministry\" />
+    <Folder Include="Views\Stuff\" />
+    <Folder Include="Views\Signup\" />
+    <Folder Include="Views\Resource\" />
+    <Folder Include="Views\Registration\" />
+  </ItemGroup>
+
+</Project>

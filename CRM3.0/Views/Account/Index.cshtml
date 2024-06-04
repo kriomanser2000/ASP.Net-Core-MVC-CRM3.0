@@ -1,0 +1,95 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "User Accounts";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<div class="btn-group">
+	<a class="btn" href="~/Account/Create"><i class="icon-plus"></i>&nbsp;Add User</a>
+</div>
+<br/>
+<div class="well">
+	<table class="table table-bordered table-striped table-hover">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Username</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Status</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in this.ViewBag.Users)
+			{
+				<tr>
+					<td>@item.UserProfile.id</td>
+					<td>@item.UserProfile.Username</td>
+					<td>@item.Person.FirstName</td>
+					<td>@item.Person.LastName</td>
+					<td>@item.Person.Status</td>
+					<td>
+						<a class="btn"
+						   id="EditUser"
+						   href="~/Account/Edit/@item.UserProfile.id"
+						   title="Edit User"><i class="icon-edit"></i></a>
+
+						<button class="btn"
+								id="DeleteUser"
+								data-userid="@item.UserProfile.id"
+								title="Delete Mentor">
+							<i class="icon-remove"></i>
+						</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>ID</th>
+				<th>Username</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Status</th>
+				<th>Actions</th>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+
+<div class="well">
+	<div class="control-group">
+		<div class="controls">
+			<a href="@Request.UrlReferrer" class="btn">Back</a>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$('#DeleteUser').click(function () 
+	{
+		var r = confirm("Are you sure you want to delete the selected user?  This action cannot be undone!");
+		if (r == true) 
+		{
+			$.ajax({
+				type: "DELETE",
+				url: '@Url.Content("~/Account/Delete/")' + $(this).data("userid"),
+				success: function(data) 
+				{
+					if (data.Message == "success") 
+					{
+						location.reload();
+					} 
+					else 
+					{
+						alert('Failed to delete user.');
+					}
+				}
+			});
+		}
+		return false;
+	});
+</script>
